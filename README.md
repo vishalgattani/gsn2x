@@ -8,31 +8,36 @@
 
 This little program renders [Goal Structuring Notation](https://scsc.uk/gsn) in a YAML format to a scalable vector graphics (SVG) image.
 
-<picture>
+<!-- <picture>
   <source media="(prefers-color-scheme: dark)" srcset="examples/example.gsn_dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="examples/example.gsn.svg">
   <img alt="Example" src="examples/example.gsn.svg">
-</picture>
+</picture> -->
 
-Feel free to use it and please let me know. Same applies if you have feature requests, bug reports or contributions.
-    
+Feel free to use it and please let Jonas ([jonasthewolf](https://github.com/jonasthewolf/gsn2x/releases)) know. Same applies if you have feature requests, bug reports or contributions.
+
 **You can find pre-built binaries for Windows, Linux and MacOS on the [releases page](https://github.com/jonasthewolf/gsn2x/releases).**
 
+## Download
+
+1. Download the MacOS release version from [here](https://github.com/jonasthewolf/gsn2x/releases).
+2. Run `chmod 755 <gsn2x-file>` to give it executable permissions.
+3. Run `./gsn2x --help` for more help.
 
 ## Usage
 
 You can create an SVG like this:
 
-    gsn2x <yourgsnfile.yaml> 
+    ./gsn2x <yourgsnfile.yaml>
 
 The output is an argument view in SVG format and automatically written to `<yourgsnfile.svg>`. If more than one input file is provided, they are treated as [modules](#modular-extension).
 
 ## Syntax in YAML
 
 The following Goal Structuring Notation (GSN) core elements are supported:
- - Goal (G), 
- - Assumption (A), 
- - Justification (J), 
+ - Goal (G),
+ - Assumption (A),
+ - Justification (J),
  - Solution (Sn),
  - Context (C), and
  - Strategy (S)
@@ -44,7 +49,7 @@ The only mandatory attribute is `text` that is the textual contents of the eleme
 
 An optional `supportedBy` gives a list of the supporting arguments. Thus, Goal, Strategy and Solution can be listed here.
 
-An optional `inContextOf` links Justifications, Contexts or Assumptions. 
+An optional `inContextOf` links Justifications, Contexts or Assumptions.
 
 Every element may have an optional `url` attribute that creates a navigation link in the resulting SVG.
 This should support finding information more easily.
@@ -63,7 +68,7 @@ G1:
 S1:
   text: This is a Strategy
 
-C1: 
+C1:
   text: This is a Context
 ```
 
@@ -81,7 +86,7 @@ The tool automatically performs the following validation checks on the input YAM
  - V05: All referenced elements in `supportedBy` and `inContextOf` must be unique i.e., no duplicates in the list.
  - V06: All referenced elements in `supportedBy` and `inContextOf` must not refer to the element itself.
  - V07: All elements listed as extending other elements must be known elements of the current module and semantically sensible (see V04).
- - C01: There should be only one but must be at least one top-level element (G,S,C,J,A,Sn) unreferenced. 
+ - C01: There should be only one but must be at least one top-level element (G,S,C,J,A,Sn) unreferenced.
  - C02: The top-level element must be a Goal. A top-level element is an element that is not referenced by any other element.
  - C03: All referenced elements in `supportedBy` and `inContextOf` must exist.
  - C04: There must be no circular `supportedBy` references.
@@ -121,15 +126,15 @@ S1:
   text: This is a Strategy
   layer1: This is additional information for S1.
 
-C1: 
+C1:
   text: This is a Context
   layer1: This is additional information for C1.
 ```
 
 In this example, a call to `gsn2x -l layer1` will show the additional information to each element prefixed with _`LAYER1: `_.
-Of course, using `text`, `inContextOf`, `supportedBy`, `url`, `undeveloped`, `level` or `classes` are not sensible parameters to pass for the `-l` option. 
+Of course, using `text`, `inContextOf`, `supportedBy`, `url`, `undeveloped`, `level` or `classes` are not sensible parameters to pass for the `-l` option.
 
-Please note that using `module` and passing it as a layer option will also not work. 
+Please note that using `module` and passing it as a layer option will also not work.
 
 It is intentional that information is only added for a view, but not hidden to ensure consistency of the GSN in all variants.
 
@@ -137,15 +142,15 @@ It is intentional that information is only added for a view, but not hidden to e
 
 ### Vertical placement
 
-To influence the rendered image, you can add an identifier to a GSN element with the `level` attribute. 
-All elements with the same identifier for `level` will now show up on the same vertical level. 
+To influence the rendered image, you can add an identifier to a GSN element with the `level` attribute.
+All elements with the same identifier for `level` will now show up on the same vertical level.
 
-This is especially useful, if e.g., two goals or strategies are on the same logical level, 
+This is especially useful, if e.g., two goals or strategies are on the same logical level,
 but have a different "depth" in the argumentation (i.e. a different number of goals or strategies in their path to the root goal).
 
 See the [example](examples/example.gsn.yaml) for usage. The strategies S1 and S2 are on the same level.
 
-It is recommended to use `level` only for goals, since related contexts, 
+It is recommended to use `level` only for goals, since related contexts,
 justifications and assumptions are automatically put on the same level.
 
 ### Horizontal placement
@@ -158,16 +163,16 @@ The elements are sorted lexicographically. Thus, a goal `G1` if placed on the sa
 
 ## Stylesheets for SVG rendering
 
-You can provide (multiple) custom CSS stylesheets for SVG via the `-s` or `--stylesheet` options. 
+You can provide (multiple) custom CSS stylesheets for SVG via the `-s` or `--stylesheet` options.
 The path is not interpreted by gsn2x and, thus, is relative to the SVG if relative.
 
 Every element will also be addressable by `id`. The `id` is the same as the YAML id.
 
-Elements are assigned `gsnelem` class, edges are assigned `gsnedge` class. 
+Elements are assigned `gsnelem` class, edges are assigned `gsnedge` class.
 
 The complete diagram is assigned `gsndiagram` class.
 
-You can assign additional classes by adding the `classes:` attribute. It must be a list of classes you want to assign. 
+You can assign additional classes by adding the `classes:` attribute. It must be a list of classes you want to assign.
 Additional layers will be added as CSS classes, too. A `layer1` will e.g. be added as `gsnlay_layer1`.
 
 When using `-t` or `--embed-css` instead of `-s` the CSS stylesheets will be embedded in the SVG. The path is interpreted as relative to the current working directory then.
@@ -206,9 +211,9 @@ If the architecture view should not be output, use the `-A` option.
 
 ### Complete view
 
-The complete view is a similar to an argument view for a single module, 
-but showing all modules within the same diagram. The modules are "unrolled". 
-<!-- Modules can be masked i.e., unrolling is prevented, 
+The complete view is a similar to an argument view for a single module,
+but showing all modules within the same diagram. The modules are "unrolled".
+<!-- Modules can be masked i.e., unrolling is prevented,
 by additionally adding those modules with the `-m` option. -->
 
 See [example](examples/modular/complete.svg) here.
@@ -220,8 +225,8 @@ The architecture view only shows the selected modules and their dependencies.
 See [example](examples/modular/architecture.svg) here.
 
 ### Example:
-    
-    gsn2x -f full.svg -a arch.svg -m sub1.yml main.yml sub1.yml sub3.yml sub5.yml  
+
+    gsn2x -f full.svg -a arch.svg -m sub1.yml main.yml sub1.yml sub3.yml sub5.yml
 
 This will generate the argument view for each module, the complete view (`-f full.svg`) of all modules and the architecture view (`-a arch.svg`). In the complete view, the elements of the `sub1` module will be represented by a module.
 
@@ -234,7 +239,7 @@ Example for a module with undeveloped elements:
 
 ```yaml
 module:
-  name: template 
+  name: template
   brief: Template for an assurance case
 
 G1:
@@ -248,7 +253,7 @@ Example for developing those elements in another module:
 module:
   name: instance
   brief: Extending instance
-  extends: 
+  extends:
     - module: template
       develops:
         G1: [G2]
@@ -276,16 +281,16 @@ If the list of evidences should not be output, use the `-E` option.
 
 It is possible to add additional `module` information in the source YAML.
 This allows describing the module`s name and an optional brief description.
-Even arbitrary information can be added. 
+Even arbitrary information can be added.
 
 `name` and `brief` are mandatory if a `module` is added.
 
 ```yaml
 
-module: 
+module:
    name: MainModule
    brief: This is a short description of the module
-   additionalInformation: 
+   additionalInformation:
     v1: Changed line 2
     v2: Added line 4
 
@@ -293,7 +298,7 @@ module:
 
 The module information is printed as part of a legend for the argument view.
 
-You can use the `-G` option to suppress the legend completely, 
+You can use the `-G` option to suppress the legend completely,
 or the `-g` option to limit it to `name`, `brief` and the time and date of generation of the SVG.
 
 ## Standard support
@@ -323,7 +328,7 @@ I noticed that it might make sense to add some information about the goals I hav
 
   I would like to keep things simple. Simple for me and others.
 
-  That means the input format should be simple to learn and edit manually in any editor. 
+  That means the input format should be simple to learn and edit manually in any editor.
   I also did not want invent a new DSL (domain-specific language) for that purpose.
   YAML (input file format) might not be the best format, but it serves as a good tradeoff for my purposes.
   Moreover, it can be parsed by other programs easily, too.
@@ -332,14 +337,14 @@ I noticed that it might make sense to add some information about the goals I hav
 
   I would like the program output to be very close to the GSN standard.
 
-  I don't want to redefine the semantics or add additional ones. 
+  I don't want to redefine the semantics or add additional ones.
   The standard was created that as many people as possible have some common grounds.
   If I added new fancy stuff, everyone might have a different interpretation of that again.
 
 - As few dependencies as possible
 
-  Since I understand that this tool might be used in some corporate environment where usage of 
-  free and open-source software might be limited, I try to keep the dependencies of this program 
+  Since I understand that this tool might be used in some corporate environment where usage of
+  free and open-source software might be limited, I try to keep the dependencies of this program
   as few as possible.
 
 ## History
@@ -354,13 +359,13 @@ I also noticed that (also for myself) it is good to note down some history of th
 
 - It got obvious that some validation, especially on the uniqueness and reference resolution is needed
   to handle larger argumentation.
-  
+
   I did not want to write those validations in Python, but in my favorite programming language Rust.
   I released the first Rust version in July 2021.
-  
+
 - I desperately tried adding the modular extension by convincing Graphviz to draw what I want, but I failed.
   I finally made decided to no longer output DOT, but directly generate SVGs from the program.
-  This required writing a specialized version for rendering the tree on my own which ended up in version 2 
+  This required writing a specialized version for rendering the tree on my own which ended up in version 2
   finally released in April 2022.
 
 Any feedback, especially the use-case in your company is very much appreciated.
