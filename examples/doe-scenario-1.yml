@@ -1,0 +1,37 @@
+
+G1:
+  text: Test Results say Algorithm 1 works properly
+  supportedBy: [Sn1,S1]
+
+Sn1:
+  text: Number of Successes of Experiment 1
+  supportedBy: [Sn2]
+
+Sn2:
+  text: Algorithm 1 works correctly
+#   # supportedBy: [Sn1]
+#   # inContextOf: [C1]
+# #undeveloped: true
+
+# C1:
+#   text: Context 1
+
+S1:
+  text: Considering binomial distribution for number of successes of Experiment 1.
+  undeveloped: true
+  inContextOf: [J1, A1, A2]
+  # layer1: P( E | Sn2=True ) = 3Cn p^n (1-p)^{3-n} P( E=n | G3=False ) = 3Cn r^n (1-r)^{3-n}
+
+J1:
+  text: Binomial Distribution of experimental runs given prior probabilities of p,r.
+
+
+A1:
+  text: Success of experiment depends on prior probabilities.
+  layer1: p = P{successful run | Sn2 =  true}
+  layer2: r = P{successful run | Sn2 =  false}
+
+A2:
+  text: Claim is true only when experiments have a threshold number of successes.
+  layer1: Number of experimental trials = n
+

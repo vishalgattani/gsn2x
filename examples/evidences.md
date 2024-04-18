@@ -1,25 +1,7 @@
 
 List of Evidences
 
-1. Sn1: Solution 1
+1. Sn1: Number of successful trials of experiment.
 
-   examples_gsn_yaml
-
-   /Users/vishalgattani/Documents/GitHub/gsn2x/examples
-
-2. Sn2: Solution 2
-
-   examples_gsn_yaml
-
-3. Sn3: Solution 3
-
-   examples_gsn_yaml
-
-4. Sn4: Solution 4
-
-   examples_gsn_yaml
-
-5. Sn5: Solution 5
-
-   examples_gsn_yaml
+  examples_test_yaml
 
